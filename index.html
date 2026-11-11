@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hope for Nations | Stories &amp; Prayer</title>
+    <style>
+      :root {
+        --bg-deep: #0d1b2a;
+        --bg-mid: #1b3556;
+        --card: rgba(255, 255, 255, 0.08);
+        --card-strong: rgba(14, 28, 42, 0.78);
+        --line: rgba(255, 255, 255, 0.18);
+        --primary: #f2c94c;
+        --primary-dark: #d4a317;
+        --text: #edf6ff;
+        --muted: #cfe0f0;
+        --success: #7be0a4;
+        --danger: #ff9d9d;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        background: linear-gradient(180deg, var(--bg-deep), var(--bg-mid));
+        color: var(--text);
+      }
+
+      .container {
+        width: min(1100px, calc(100% - 32px));
+        margin: 0 auto;
+        padding: 32px 0 40px;
+      }
+
+      .site-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 12px 16px;
+        margin: 0 0 28px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(14, 28, 42, 0.58);
+      }
+
+      .site-nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .site-nav a:hover { color: var(--primary); }
+
+      .nav-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 22px;
+      }
+
+      .community-hero {
+        position: relative;
+        overflow: hidden;
+        margin-bottom: 26px;
+        padding: clamp(30px, 6vw, 72px);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background:
+          linear-gradient(90deg, rgba(10, 23, 38, 0.96), rgba(13, 27, 42, 0.45)),
+          url('https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=1800&q=85') center 45% / cover;
+      }
+
+      .community-hero h2 {
+        max-width: 700px;
+        margin: 0 0 16px;
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        line-height: 1.02;
+      }
+
+      .community-hero p:not(.eyebrow) {
+        max-width: 580px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 1.08rem;
+        line-height: 1.7;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .hero-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        color: var(--text);
+        background: rgba(255,255,255,0.08);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .hero-link.primary {
+        border: 0;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #10233d;
+      }
+
+      .community-section {
+        margin-top: 42px;
+        scroll-margin-top: 20px;
+      }
+
+      .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 18px;
+        margin-bottom: 18px;
+      }
+
+      .section-heading h2 {
+        margin: 0;
+        font-size: clamp(1.7rem, 3vw, 2.5rem);
+      }
+
+      .section-heading p {
+        max-width: 570px;
+        margin: 8px 0 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .demo-notice {
+        padding: 12px 15px;
+        border: 1px solid rgba(242, 201, 76, 0.32);
+        border-radius: 14px;
+        background: rgba(242, 201, 76, 0.08);
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.55;
+      }
+
+      .story-tools {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 18px 0;
+      }
+
+      .field-control {
+        min-height: 44px;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255,255,255,0.06);
+        color: var(--text);
+        font: inherit;
+      }
+
+      .field-control::placeholder { color: #bed2ea; }
+      .field-control option { color: #10233d; }
+
+      .story-grid,
+      .circle-grid,
+      .prayer-grid,
+      .time-grid,
+      .care-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .story-card,
+      .circle-card,
+      .prayer-card,
+      .time-card,
+      .care-card {
+        padding: 20px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: var(--card);
+      }
+
+      .story-card h3,
+      .circle-card h3,
+      .prayer-card h3,
+      .care-card h3 {
+        margin: 12px 0 8px;
+        font-size: 1.15rem;
+      }
+
+      .story-card p,
+      .circle-card p,
+      .prayer-card p,
+      .care-card p,
+      .time-card p {
+        color: var(--muted);
+        line-height: 1.65;
+        margin: 0;
+      }
+
+      .story-meta,
+      .circle-meta {
+        color: var(--primary);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+      }
+
+      .circle-card .hero-link { margin-top: 16px; }
+
+      .prayer-card button {
+        margin-top: 15px;
+        padding: 10px 14px;
+        border: 1px solid var(--line);
+        background: rgba(255,255,255,0.07);
+        color: var(--text);
+      }
+
+      .prayer-card button[aria-pressed="true"] {
+        color: #10233d;
+        background: var(--success);
+      }
+
+      .time-card strong {
+        display: block;
+        margin: 10px 0 4px;
+        font-size: 1.7rem;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .reflection-card {
+        padding: clamp(22px, 5vw, 42px);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(242,201,76,0.12), rgba(255,255,255,0.04));
+      }
+
+      .reflection-card blockquote {
+        margin: 0;
+        max-width: 760px;
+        font-size: clamp(1.35rem, 3vw, 2.2rem);
+        line-height: 1.45;
+      }
+
+      .reflection-card p {
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .guidelines-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+        padding: 0;
+        list-style: none;
+      }
+
+      .guidelines-list li {
+        padding: 16px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        color: var(--muted);
+        line-height: 1.6;
+        background: rgba(255,255,255,0.04);
+      }
+
+      .community-form {
+        margin-top: 18px;
+        padding: 22px;
+        border: 1px solid var(--line);
+        border-radius: 20px;
+        background: rgba(14, 28, 42, 0.5);
+      }
+
+      .community-form h3 { margin: 0 0 14px; }
+
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .community-form textarea.field-control {
+        min-height: 110px;
+        resize: vertical;
+      }
+
+      .community-form .field-control { width: 100%; }
+
+      .form-full { grid-column: 1 / -1; }
+
+      .form-check {
+        display: flex;
+        align-items: flex-start;
+        gap: 9px;
+        color: var(--muted);
+        font-size: 0.88rem;
+        line-height: 1.5;
+      }
+
+      .form-submit {
+        margin-top: 14px;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #10233d;
+        font-weight: 800;
+      }
+
+      .form-status {
+        min-height: 1.4em;
+        margin: 10px 0 0;
+        color: var(--success);
+      }
+
+      .empty-state {
+        grid-column: 1 / -1;
+        padding: 24px;
+        border: 1px dashed var(--line);
+        border-radius: 16px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 22px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .brand-mark {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        font-size: 1.6rem;
+        background: linear-gradient(135deg, var(--primary), #fff0a6);
+        color: #17314d;
+        box-shadow: 0 8px 18px rgba(242, 201, 76, 0.3);
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: clamp(1.9rem, 2vw, 2.8rem);
+      }
+
+      .status-pill {
+        border: 1px solid var(--line);
+        background: rgba(123, 224, 164, 0.12);
+        color: var(--success);
+        border-radius: 999px;
+        padding: 8px 14px;
+        font-size: 0.82rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 22px;
+      }
+
+      .panel {
+        border: 1px solid var(--line);
+        background: var(--card);
+        border-radius: 22px;
+        box-shadow: 0 14px 30px rgba(0, 0, 0, 0.18);
+        overflow: hidden;
+      }
+
+      .panel-header {
+        padding: 18px 20px 12px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        font-size: 1.2rem;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .verse {
+        font-size: 1.08rem;
+        line-height: 1.7;
+        color: var(--muted);
+        margin: 0;
+      }
+
+      .quote-mark {
+        color: var(--primary);
+        font-size: 2rem;
+        display: inline-block;
+        transform: translateY(8px);
+      }
+
+      .message-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        max-height: 360px;
+        overflow-y: auto;
+        padding-right: 6px;
+        margin-bottom: 16px;
+      }
+
+      .message {
+        max-width: 85%;
+        padding: 12px 14px;
+        border-radius: 16px;
+        line-height: 1.5;
+        font-size: 0.96rem;
+      }
+
+      .message.user {
+        align-self: flex-end;
+        background: rgba(242, 201, 76, 0.18);
+        border: 1px solid rgba(242, 201, 76, 0.28);
+      }
+
+      .message.agent {
+        align-self: flex-start;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid var(--line);
+      }
+
+      .quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin: 12px 0 18px;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        border-radius: 999px;
+        transition: transform 0.18s ease, opacity 0.18s ease;
+      }
+
+      button:hover { transform: translateY(-1px); }
+      button:active { transform: translateY(0); }
+
+      .quick-btn {
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid var(--line);
+        color: var(--text);
+      }
+
+      .send-btn {
+        padding: 0 18px;
+        height: 44px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #10233d;
+        font-weight: 800;
+      }
+
+      .composer {
+        display: flex;
+        gap: 10px;
+      }
+
+      .composer input {
+        flex: 1;
+        height: 44px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        padding: 0 16px;
+        font-size: 0.98rem;
+      }
+
+      .composer input::placeholder { color: #bed2ea; }
+
+      .photo-story {
+        margin-top: 28px;
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 22px;
+        align-items: center;
+      }
+
+      .photo-stack {
+        position: relative;
+        min-height: 330px;
+      }
+
+      .photo-card {
+        position: absolute;
+        inset: 0;
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.24);
+        box-shadow: 0 18px 30px rgba(0,0,0,0.22);
+        background-size: cover;
+        background-position: center;
+      }
+
+      .photo-card:nth-child(1) {
+        transform: rotate(-8deg) translateX(-18px) translateY(14px);
+        background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1200&q=80');
+      }
+
+      .photo-card:nth-child(2) {
+        transform: rotate(6deg) translateX(80px) translateY(-8px);
+        background-image: url('https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=1200&q=80');
+      }
+
+      .photo-card:nth-child(3) {
+        transform: rotate(-3deg) translateX(180px) translateY(18px);
+        background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80');
+      }
+
+      .photo-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(11,17,24,0.2), rgba(11,17,24,0.55));
+      }
+
+      .photo-label {
+        position: absolute;
+        left: 20px;
+        bottom: 18px;
+        z-index: 1;
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: rgba(15, 29, 45, 0.65);
+        border: 1px solid rgba(255,255,255,0.2);
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--primary);
+      }
+
+      .photo-copy {
+        padding: 14px 0;
+      }
+
+      .eyebrow {
+        margin: 0 0 10px;
+        color: var(--primary);
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-size: 0.74rem;
+        font-weight: 800;
+      }
+
+      .photo-copy h2 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 3vw, 3rem);
+        line-height: 1.1;
+      }
+
+      .photo-copy p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 1.04rem;
+      }
+
+      .prayer-film {
+        margin-top: 28px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        overflow: hidden;
+        box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+      }
+
+      .film-scene {
+        position: relative;
+        min-height: 360px;
+        background-image: linear-gradient(180deg, rgba(10,15,24,0.18), rgba(10,15,24,0.72)),
+          url('https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=1400&q=80');
+        background-size: cover;
+        background-position: center;
+        display: grid;
+        place-items: end center;
+        padding: 26px;
+        isolation: isolate;
+      }
+
+      .film-scene::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(0,0,0,0.45));
+        z-index: -1;
+      }
+
+      .film-overlay {
+        width: min(100%, 620px);
+        padding: 18px 22px;
+        border-radius: 18px;
+        background: rgba(10, 17, 25, 0.54);
+        border: 1px solid rgba(255,255,255,0.16);
+        backdrop-filter: blur(8px);
+        text-align: center;
+      }
+
+      .film-tag {
+        margin: 0 0 8px;
+        color: var(--primary);
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 0.72rem;
+        font-weight: 800;
+      }
+
+      .film-overlay h3 {
+        margin: 0 0 8px;
+        font-size: clamp(1.7rem, 2vw, 2.7rem);
+      }
+
+      .film-overlay p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .music-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 16px 18px 22px;
+      }
+
+      .music-btn {
+        padding: 12px 18px;
+        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+        color: #12233a;
+        font-weight: 800;
+        border-radius: 999px;
+      }
+
+      .music-note {
+        color: var(--muted);
+        font-size: 0.84rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 18px 16px;
+      }
+
+      .stat-card strong {
+        display: block;
+        font-size: 1.5rem;
+        margin-bottom: 4px;
+      }
+
+      .stat-card span {
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+
+      .prayer-box {
+        margin-top: 18px;
+        background: rgba(123, 224, 164, 0.08);
+        border: 1px solid rgba(123, 224, 164, 0.25);
+        border-radius: 18px;
+        padding: 18px;
+        color: var(--muted);
+      }
+
+      .prayer-box strong { color: var(--success); }
+
+      footer {
+        margin-top: 24px;
+        padding: 16px 0 0;
+        text-align: center;
+        color: var(--muted);
+      }
+
+      footer a { color: var(--muted); }
+
+      @media (max-width: 820px) {
+        .hero-grid,
+        .photo-story {
+          grid-template-columns: 1fr;
+        }
+
+        .story-grid,
+        .circle-grid,
+        .prayer-grid,
+        .time-grid,
+        .care-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .photo-stack {
+          min-height: 280px;
+        }
+
+        .photo-card:nth-child(1) {
+          transform: rotate(-6deg) translateX(10px) translateY(8px);
+        }
+
+        .photo-card:nth-child(2) {
+          transform: rotate(5deg) translateX(50px) translateY(-10px);
+        }
+
+        .photo-card:nth-child(3) {
+          transform: rotate(-3deg) translateX(90px) translateY(16px);
+        }
+
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .site-nav {
+          align-items: flex-start;
+          flex-direction: column;
+          border-radius: 20px;
+        }
+
+        .section-heading { align-items: flex-start; flex-direction: column; }
+      }
+
+      @media (max-width: 560px) {
+        .story-grid,
+        .circle-grid,
+        .prayer-grid,
+        .time-grid,
+        .care-grid,
+        .form-grid { grid-template-columns: 1fr; }
+        .guidelines-list { grid-template-columns: 1fr; }
+        .nav-links { gap: 12px 18px; }
+        .community-hero { padding: 30px 22px; }
+        .form-full { grid-column: auto; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="brand">
+          <div class="brand-mark">🌍</div>
+          <h1>Hope for Nations</h1>
+        </div>
+        <div class="status-pill">A place for hope & prayer</div>
+      </header>
+
+      <nav class="site-nav" aria-label="Main navigation">
+        <a href="#top" class="brand-name">HOPE FOR NATIONS</a>
+        <div class="nav-links">
+          <a href="#world">Around the world</a>
+          <a href="#stories">Stories</a>
+          <a href="#circles">Prayer circles</a>
+          <a href="#prayer-wall">Prayer wall</a>
+          <a href="#share">Share your story</a>
+          <a href="#care">Ways to care</a>
+        </div>
+      </nav>
+
+      <section class="community-hero" id="top">
+        <p class="eyebrow">You are not alone</p>
+        <h2>Faith grows when we gather.</h2>
+        <p>Find encouragement in illustrative reflections, save your own story on this device, and plan a space to pray together.</p>
+        <div class="hero-actions">
+          <a class="hero-link primary" href="#circles">Find a prayer circle</a>
+          <a class="hero-link" href="#stories">Read stories of hope</a>
+        </div>
+      </section>
+
+      <section class="hero-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Message of Hope</h2>
+          </div>
+          <div class="content">
+            <p class="verse">
+              <span class="quote-mark">“</span>
+              To every family facing hardship, every nation enduring conflict, hunger, or disaster: you are not forgotten.
+              God’s love reaches every corner of the world.
+              <span class="quote-mark">”</span>
+            </p>
+
+            <div class="prayer-box">
+              <strong>Prayer:</strong> Lord, strengthen the weary, bring peace where there is conflict, and restore hope where despair grows.
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <h2>Support Agent</h2>
+          </div>
+          <div class="content">
+            <div class="message-list" id="messageList">
+              <div class="message agent">Hello, I’m the Hope Agent. Share what you’re facing, and I’ll respond with encouragement, prayer, or a next step.</div>
+            </div>
+
+            <div class="quick-actions">
+              <button class="quick-btn" data-prompt="Give me a daily encouragement">Daily hope</button>
+              <button class="quick-btn" data-prompt="Pray for my nation">Prayer</button>
+              <button class="quick-btn" data-prompt="Help me make a plan for today">Plan</button>
+            </div>
+
+            <div class="composer">
+              <input id="userInput" type="text" placeholder="Type your message..." aria-label="Message the Hope Agent" />
+              <button class="send-btn" id="sendBtn">Send</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="community-section" id="world">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">One world, many time zones</p>
+            <h2>Pause and pray around the world</h2>
+            <p>A small reminder that people are waking, working, resting, and hoping at different hours everywhere.</p>
+          </div>
+        </div>
+        <div class="time-grid" id="worldClocks" aria-label="Local times around the world"></div>
+      </section>
+
+      <section class="community-section" id="reflection">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">A moment to breathe</p>
+            <h2>Today’s reflection</h2>
+          </div>
+        </div>
+        <div class="reflection-card">
+          <p class="circle-meta" id="reflectionDate"></p>
+          <blockquote id="dailyReflection"></blockquote>
+          <p>Take what is helpful, leave what is not, and consider one gentle next step for today.</p>
+        </div>
+      </section>
+
+      <section class="community-section" id="stories">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Stories of hope</p>
+            <h2>Small lights in hard seasons</h2>
+            <p>These are clearly labeled illustrative reflections, not real testimonials. The archive is ready to grow with stories shared by the community.</p>
+          </div>
+        </div>
+        <div class="demo-notice">Preview notice: stories and prayer circles you add are saved only in this browser. They are not published or visible to other people.</div>
+        <div class="story-tools">
+          <input class="field-control" id="storySearch" type="search" placeholder="Search stories..." aria-label="Search stories" />
+          <select class="field-control" id="storyFilter" aria-label="Filter stories">
+            <option value="all">All themes</option>
+            <option value="grief">Grief & comfort</option>
+            <option value="renewal">New beginnings</option>
+            <option value="community">Community & care</option>
+            <option value="faith">Faith in uncertainty</option>
+          </select>
+        </div>
+        <div class="story-grid" id="storyGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="community-section" id="circles">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Pray together</p>
+            <h2>Prayer circles</h2>
+            <p>Make room for listening, kindness, and prayer. Add a meeting link from a service you trust to let others join your gathering.</p>
+          </div>
+        </div>
+        <div class="demo-notice">Demo only: circles created here are stored on this device. This page does not provide live video, accounts, or shared scheduling.</div>
+        <div class="circle-grid" id="circleGrid" aria-live="polite"></div>
+        <form class="community-form" id="circleForm">
+          <h3>Create a prayer circle</h3>
+          <div class="form-grid">
+            <input class="field-control" name="title" type="text" maxlength="70" placeholder="Gathering name" required />
+            <input class="field-control" name="when" type="datetime-local" required />
+            <input class="field-control" name="topic" type="text" maxlength="50" placeholder="Prayer focus (optional)" />
+            <input class="field-control" name="meetingLink" type="url" placeholder="Meeting link (https://...)" />
+          </div>
+          <button class="form-submit" type="submit">Save circle on this device</button>
+          <p class="form-status" id="circleStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="community-section" id="prayer-wall">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Hold one another in prayer</p>
+            <h2>Prayer wall</h2>
+            <p>Use these general prayer focuses or add a private focus for yourself. Nothing here is posted to a shared public feed.</p>
+          </div>
+        </div>
+        <div class="demo-notice">Please do not include names, addresses, contact details, or private medical information. Prayer notes and “I prayed” marks stay only in this browser.</div>
+        <div class="prayer-grid" id="prayerGrid" aria-live="polite"></div>
+        <form class="community-form" id="prayerForm">
+          <h3>Add a private prayer focus</h3>
+          <div class="form-grid">
+            <input class="field-control form-full" name="focus" type="text" maxlength="180" placeholder="A short, general prayer focus" required />
+          </div>
+          <button class="form-submit" type="submit">Save focus on this device</button>
+          <p class="form-status" id="prayerStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="community-section" id="share">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Your voice matters</p>
+            <h2>Share a story of hope</h2>
+            <p>Share only what you feel comfortable keeping in this local preview. Avoid names, contact details, and sensitive information.</p>
+          </div>
+        </div>
+        <form class="community-form" id="storyForm">
+          <h3>Add a reflection to your local story list</h3>
+          <div class="form-grid">
+            <input class="field-control" name="title" type="text" maxlength="80" placeholder="Story title" required />
+            <select class="field-control" name="theme" required>
+              <option value="">Choose a theme</option>
+              <option value="grief">Grief & comfort</option>
+              <option value="renewal">New beginnings</option>
+              <option value="community">Community & care</option>
+              <option value="faith">Faith in uncertainty</option>
+            </select>
+            <textarea class="field-control form-full" name="body" maxlength="1200" placeholder="Write your reflection..." required></textarea>
+            <label class="form-check form-full">
+              <input name="consent" type="checkbox" required />
+              I understand this stays in this browser only and is not submitted to a public community.
+            </label>
+          </div>
+          <button class="form-submit" type="submit">Save reflection locally</button>
+          <p class="form-status" id="storyStatus" role="status"></p>
+        </form>
+      </section>
+
+      <section class="community-section" id="care">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Faith made tangible</p>
+            <h2>Small ways to care for one another</h2>
+            <p>Hope can take the form of presence, practical help, and respect for each person’s story.</p>
+          </div>
+        </div>
+        <div class="care-grid">
+          <article class="care-card">
+            <span class="story-meta">Listen</span>
+            <h3>Make space for someone</h3>
+            <p>Ask what kind of support would feel helpful. Listen without pressure to explain, forgive, or feel better on a schedule.</p>
+          </article>
+          <article class="care-card">
+            <span class="story-meta">Show up</span>
+            <h3>Offer practical kindness</h3>
+            <p>A meal, a ride, a check-in, or help finding a local service can make care easier to accept. Ask before sharing someone’s story.</p>
+          </article>
+          <article class="care-card">
+            <span class="story-meta">Pray together</span>
+            <h3>Keep it gentle and welcoming</h3>
+            <p>Make room for silence, different traditions, and the choice to participate or simply listen. Never make support conditional on belief.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="community-section" id="guidelines">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">A safer space starts with us</p>
+            <h2>Community care guidelines</h2>
+            <p>If this grows into a public community, these principles should be supported by real moderation, privacy controls, and clear reporting tools.</p>
+          </div>
+        </div>
+        <ul class="guidelines-list">
+          <li><strong>Protect privacy.</strong> Share only your own story. Get permission before naming or identifying anyone else.</li>
+          <li><strong>Choose kindness.</strong> No harassment, shaming, hate, coercion, or unsolicited pressure to disclose personal details.</li>
+          <li><strong>Respect boundaries.</strong> Prayer and spiritual support are optional. Never promise cures or replace qualified professional care.</li>
+          <li><strong>Seek urgent help locally.</strong> If you or someone else is in immediate danger, contact local emergency services or a trusted person nearby.</li>
+        </ul>
+      </section>
+
+      <section class="photo-story">
+        <div class="photo-stack" aria-label="Stack of uplifting images">
+          <div class="photo-card">
+            <div class="photo-label">Love never fails</div>
+          </div>
+          <div class="photo-card">
+            <div class="photo-label">A light in every storm</div>
+          </div>
+          <div class="photo-card">
+            <div class="photo-label">Hope is alive</div>
+          </div>
+        </div>
+
+        <div class="photo-copy">
+          <p class="eyebrow">Faith in action</p>
+          <h2>God is real.</h2>
+          <p>
+            In every answered prayer, every restored life, and every moment of peace, God’s presence is still moving.
+            This is a reminder that hope is not just a feeling—it is a living testimony that God is near.
+          </p>
+        </div>
+      </section>
+
+      <section class="prayer-film" aria-label="Prayer film with soft music">
+        <div class="film-scene">
+          <div class="film-overlay">
+            <p class="film-tag">Prayer moment</p>
+            <h3>He hears every tear.</h3>
+            <p>In the quiet moments, God is near. Let the room still, breathe deeply, and pray with hope.</p>
+          </div>
+        </div>
+
+        <div class="music-controls">
+          <button class="music-btn" id="musicToggle" type="button">Play slow prayer music</button>
+          <span class="music-note">Gentle worship</span>
+        </div>
+      </section>
+
+      <footer>
+        <p>Made with love to spread hope around the world. Sample content is illustrative; community features are local previews.</p>
+        <a href="#guidelines">Privacy &amp; care guidelines</a>
+      </footer>
+    </div>
+
+    <script>
+      const messageList = document.getElementById('messageList');
+      const userInput = document.getElementById('userInput');
+      const sendBtn = document.getElementById('sendBtn');
+
+      function addMessage(text, sender) {
+        const msg = document.createElement('div');
+        msg.className = `message ${sender}`;
+        msg.textContent = text;
+        messageList.appendChild(msg);
+        messageList.scrollTop = messageList.scrollHeight;
+      }
+
+      function buildResponse(input) {
+        const text = input.trim();
+        if (!text) return 'Please share a word or need, and I will respond with encouragement.';
+
+        const lower = text.toLowerCase();
+
+        if (lower.includes('pray') || lower.includes('prayer')) {
+          return 'Let us pray: Lord, bring peace, strength, and comfort to every heart in need. Give courage for this day and hope for tomorrow.';
+        }
+
+        if (lower.includes('afraid') || lower.includes('fear') || lower.includes('anxious')) {
+          return 'You do not have to carry fear alone. God is with you, and even in uncertain days, His presence is steady and near.';
+        }
+
+        if (lower.includes('tired') || lower.includes('weak') || lower.includes('exhausted')) {
+          return 'Rest is part of strength. Take one faithful step at a time, and remember that the Lord renews those who trust Him.';
+        }
+
+        if (lower.includes('plan') || lower.includes('next step') || lower.includes('help')) {
+          return 'Start with three simple steps: pray, breathe, and act on the next right thing. Keep your focus on what can be done today.';
+        }
+
+        if (lower.includes('nation') || lower.includes('community') || lower.includes('people')) {
+          return 'Even when the world feels heavy, communities are strengthened by hope, service, and prayer. Your voice and actions matter.';
+        }
+
+        if (lower.includes('hope') || lower.includes('encouragement')) {
+          return 'Keep believing. God sees every hardship, and His promises remain true even in the hardest seasons.';
+        }
+
+        return 'I am with you in this moment. Take one breath, hold on to faith, and remember that hope often grows quietly before it is seen.';
+      }
+
+      function handleSend() {
+        const value = userInput.value.trim();
+        if (!value) return;
+
+        addMessage(value, 'user');
+        userInput.value = '';
+
+        const response = buildResponse(value);
+        setTimeout(() => addMessage(response, 'agent'), 250);
+      }
+
+      sendBtn.addEventListener('click', handleSend);
+      userInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') handleSend();
+      });
+
+      document.querySelectorAll('.quick-btn').forEach((button) => {
+        button.addEventListener('click', () => {
+          const prompt = button.getAttribute('data-prompt');
+          userInput.value = prompt;
+          handleSend();
+        });
+      });
+
+      const sampleStories = [
+        { title: 'A quiet moment after loss', theme: 'grief', body: 'An illustrative reflection: grief can make even ordinary days feel heavy. A kind presence, a meal shared, or a few minutes of quiet prayer can help someone feel less alone.', source: 'Illustrative example' },
+        { title: 'Beginning again, one step at a time', theme: 'renewal', body: 'An illustrative reflection: starting over rarely happens all at once. A small decision to ask for help can become the first step toward a more hopeful season.', source: 'Illustrative example' },
+        { title: 'A community makes room', theme: 'community', body: 'An illustrative reflection: when neighbors listen without rushing to fix everything, burdens become easier to carry. Care can begin with showing up and staying present.', source: 'Illustrative example' },
+        { title: 'Prayer in an uncertain season', theme: 'faith', body: 'An illustrative reflection: certainty may not arrive on demand. Some people find steadiness in a simple prayer, a trusted friend, and focusing on the next kind thing they can do.', source: 'Illustrative example' },
+        { title: 'The courage to ask', theme: 'renewal', body: 'An illustrative reflection: saying “I need support” can take courage. Asking opens a door for others to respond with practical care, companionship, and prayer.', source: 'Illustrative example' },
+        { title: 'Listening is a form of love', theme: 'community', body: 'An illustrative reflection: people facing hard news may not need perfect words. Patient listening can make space for sorrow and remind someone that they matter.', source: 'Illustrative example' }
+      ];
+      const themeNames = {
+        grief: 'Grief & comfort',
+        renewal: 'New beginnings',
+        community: 'Community & care',
+        faith: 'Faith in uncertainty'
+      };
+      const storyGrid = document.getElementById('storyGrid');
+      const storySearch = document.getElementById('storySearch');
+      const storyFilter = document.getElementById('storyFilter');
+      const circleGrid = document.getElementById('circleGrid');
+      const storyForm = document.getElementById('storyForm');
+      const circleForm = document.getElementById('circleForm');
+      const storyStatus = document.getElementById('storyStatus');
+      const circleStatus = document.getElementById('circleStatus');
+      const prayerStatus = document.getElementById('prayerStatus');
+      const storyStorageKey = 'hopeForNationsStories';
+      const circleStorageKey = 'hopeForNationsCircles';
+      const prayerMarkStorageKey = 'hopeForNationsPrayerMarks';
+      const prayerFocusStorageKey = 'hopeForNationsPrayerFocuses';
+      const prayerGrid = document.getElementById('prayerGrid');
+      const prayerPrompts = [
+        { id: 'peace', region: 'For peace', text: 'For people living through conflict, displacement, and uncertainty.' },
+        { id: 'healing', region: 'For healing', text: 'For those facing illness, grief, or a difficult recovery.' },
+        { id: 'daily-needs', region: 'For daily needs', text: 'For families seeking food, safe shelter, work, and rest.' },
+        { id: 'caregivers', region: 'For caregivers', text: 'For strength and support for those caring for others.' },
+        { id: 'belonging', region: 'For belonging', text: 'For anyone feeling lonely, unseen, or far from home.' },
+        { id: 'leaders', region: 'For wise leadership', text: 'For leaders and communities working toward justice and compassion.' }
+      ];
+
+      const reflections = [
+        'You do not have to solve everything today. Begin with the next kind, possible step.',
+        'Rest is not a failure of faith. Give yourself permission to pause and receive care.',
+        'Hope can be quiet: a listening ear, a shared meal, or the courage to ask for help.',
+        'You are allowed to carry questions and still seek comfort, community, and prayer.',
+        'Let compassion begin close by—with your own heart and the person in front of you.',
+        'A hard season does not erase your worth. You deserve patience and support.',
+        'Today, make room for one small thing that brings steadiness, connection, or peace.'
+      ];
+      const dayIndex = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+      document.getElementById('dailyReflection').textContent = reflections[dayIndex % reflections.length];
+      document.getElementById('reflectionDate').textContent = new Intl.DateTimeFormat(undefined, {
+        weekday: 'long',
+        month: 'long',
+        day: 'numeric'
+      }).format(new Date());
+
+      const worldClocks = document.getElementById('worldClocks');
+      const timeZones = [
+        { city: 'Nairobi', zone: 'Africa/Nairobi' },
+        { city: 'London', zone: 'Europe/London' },
+        { city: 'New York', zone: 'America/New_York' },
+        { city: 'Manila', zone: 'Asia/Manila' },
+        { city: 'Sydney', zone: 'Australia/Sydney' }
+      ];
+
+      function renderWorldClocks() {
+        const now = new Date();
+        worldClocks.replaceChildren();
+        timeZones.forEach((place) => {
+          const card = document.createElement('article');
+          card.className = 'time-card';
+          card.appendChild(createTextElement('span', 'story-meta', 'Local time'));
+          card.appendChild(createTextElement('h3', '', place.city));
+          card.appendChild(createTextElement('strong', '', new Intl.DateTimeFormat(undefined, {
+            timeZone: place.zone,
+            hour: '2-digit',
+            minute: '2-digit'
+          }).format(now)));
+          card.appendChild(createTextElement('p', '', new Intl.DateTimeFormat(undefined, {
+            timeZone: place.zone,
+            weekday: 'short',
+            month: 'short',
+            day: 'numeric'
+          }).format(now)));
+          worldClocks.appendChild(card);
+        });
+      }
+
+      renderWorldClocks();
+      window.setInterval(renderWorldClocks, 60000);
+
+      function readCollection(key, statusElement) {
+        try {
+          const value = localStorage.getItem(key);
+          if (!value) return [];
+          const entries = JSON.parse(value);
+          if (!Array.isArray(entries)) throw new Error('Saved data is not a list.');
+          return entries;
+        } catch (error) {
+          console.error(`Could not read ${key} from this browser:`, error);
+          statusElement.textContent = 'Saved local data could not be read. You can still browse examples or try saving again.';
+          return [];
+        }
+      }
+
+      function saveCollection(key, entries, statusElement) {
+        try {
+          localStorage.setItem(key, JSON.stringify(entries));
+          return true;
+        } catch (error) {
+          console.error(`Could not save ${key} in this browser:`, error);
+          statusElement.textContent = 'Could not save in this browser. Check storage availability and try again.';
+          return false;
+        }
+      }
+
+      function createTextElement(tag, className, text) {
+        const element = document.createElement(tag);
+        if (className) element.className = className;
+        element.textContent = text;
+        return element;
+      }
+
+      function renderStories() {
+        const savedStories = readCollection(storyStorageKey, storyStatus);
+        const stories = sampleStories.concat(savedStories);
+        const query = storySearch.value.trim().toLowerCase();
+        const theme = storyFilter.value;
+        const matching = stories.filter((story) => {
+          const matchesTheme = theme === 'all' || story.theme === theme;
+          const matchesText = `${story.title} ${story.body}`.toLowerCase().includes(query);
+          return matchesTheme && matchesText;
+        });
+
+        storyGrid.replaceChildren();
+        if (!matching.length) {
+          storyGrid.appendChild(createTextElement('p', 'empty-state', 'No stories match that search yet.'));
+          return;
+        }
+
+        matching.forEach((story) => {
+          const card = document.createElement('article');
+          card.className = 'story-card';
+          card.appendChild(createTextElement('span', 'story-meta', story.source || 'Local reflection'));
+          card.appendChild(createTextElement('h3', '', story.title));
+          card.appendChild(createTextElement('p', '', story.body));
+          const themeLabel = themeNames[story.theme];
+          if (themeLabel) card.appendChild(createTextElement('p', 'story-meta', themeLabel));
+          storyGrid.appendChild(card);
+        });
+      }
+
+      function renderCircles() {
+        const circles = readCollection(circleStorageKey, circleStatus);
+        circleGrid.replaceChildren();
+        if (!circles.length) {
+          circleGrid.appendChild(createTextElement('p', 'empty-state', 'No circles saved here yet. Create one below and add a meeting link from a service you use.'));
+          return;
+        }
+
+        circles.forEach((circle) => {
+          const card = document.createElement('article');
+          card.className = 'circle-card';
+          card.appendChild(createTextElement('span', 'circle-meta', 'Saved on this device'));
+          card.appendChild(createTextElement('h3', '', circle.title));
+          card.appendChild(createTextElement('p', '', `${new Date(circle.when).toLocaleString()}${circle.topic ? ` · ${circle.topic}` : ''}`));
+          if (circle.meetingLink) {
+            const link = document.createElement('a');
+            link.className = 'hero-link primary';
+            link.href = circle.meetingLink;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'Open meeting link';
+            card.appendChild(link);
+          } else {
+            card.appendChild(createTextElement('p', '', 'No meeting link added.'));
+          }
+          circleGrid.appendChild(card);
+        });
+      }
+
+      function renderPrayerWall() {
+        const prompts = prayerPrompts.concat(readCollection(prayerFocusStorageKey, prayerStatus));
+        const marks = readCollection(prayerMarkStorageKey, prayerStatus);
+        prayerGrid.replaceChildren();
+
+        prompts.forEach((prompt) => {
+          const card = document.createElement('article');
+          card.className = 'prayer-card';
+          card.appendChild(createTextElement('span', 'story-meta', prompt.region || 'Prayer focus'));
+          card.appendChild(createTextElement('p', '', prompt.text));
+
+          const prayed = marks.includes(prompt.id);
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.setAttribute('aria-pressed', String(prayed));
+          button.textContent = prayed ? 'Prayer noted on this device' : 'I prayed';
+          button.addEventListener('click', () => {
+            const updatedMarks = readCollection(prayerMarkStorageKey, prayerStatus);
+            const nextMarks = updatedMarks.includes(prompt.id)
+              ? updatedMarks.filter((id) => id !== prompt.id)
+              : updatedMarks.concat(prompt.id);
+            if (saveCollection(prayerMarkStorageKey, nextMarks, prayerStatus)) renderPrayerWall();
+          });
+          card.appendChild(button);
+          prayerGrid.appendChild(card);
+        });
+      }
+
+      storySearch.addEventListener('input', renderStories);
+      storyFilter.addEventListener('change', renderStories);
+
+      document.getElementById('prayerForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const focuses = readCollection(prayerFocusStorageKey, prayerStatus);
+        focuses.unshift({
+          id: `focus-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+          region: 'Your local prayer focus',
+          text: String(formData.get('focus')).trim()
+        });
+        if (saveCollection(prayerFocusStorageKey, focuses, prayerStatus)) {
+          event.currentTarget.reset();
+          prayerStatus.textContent = 'Prayer focus saved only in this browser.';
+          renderPrayerWall();
+        }
+      });
+
+      storyForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(storyForm);
+        const stories = readCollection(storyStorageKey, storyStatus);
+        stories.unshift({
+          title: String(formData.get('title')).trim(),
+          theme: String(formData.get('theme')),
+          body: String(formData.get('body')).trim(),
+          source: 'Your local reflection'
+        });
+        if (saveCollection(storyStorageKey, stories, storyStatus)) {
+          storyForm.reset();
+          storyStatus.textContent = 'Reflection saved in this browser only. It has not been shared or published.';
+          renderStories();
+        }
+      });
+
+      circleForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const formData = new FormData(circleForm);
+        const rawLink = String(formData.get('meetingLink')).trim();
+        let meetingLink = '';
+        if (rawLink) {
+          try {
+            const parsedLink = new URL(rawLink);
+            if (parsedLink.protocol !== 'https:' && parsedLink.protocol !== 'http:') {
+              throw new Error('Meeting links must start with http:// or https://.');
+            }
+            meetingLink = parsedLink.href;
+          } catch (error) {
+            circleStatus.textContent = error instanceof TypeError
+              ? 'Enter a valid http:// or https:// meeting link, or leave the link blank.'
+              : error.message;
+            return;
+          }
+        }
+
+        const circles = readCollection(circleStorageKey, circleStatus);
+        circles.unshift({
+          title: String(formData.get('title')).trim(),
+          when: String(formData.get('when')),
+          topic: String(formData.get('topic')).trim(),
+          meetingLink
+        });
+        if (saveCollection(circleStorageKey, circles, circleStatus)) {
+          circleForm.reset();
+          circleStatus.textContent = 'Circle saved on this device only. Share the meeting link separately with people you trust.';
+          renderCircles();
+        }
+      });
+
+      renderStories();
+      renderCircles();
+      renderPrayerWall();
+
+      const musicToggle = document.getElementById('musicToggle');
+      let audioContext = null;
+      let slowMusicNodes = null;
+
+      function buildSlowPrayerMusic() {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const masterGain = ctx.createGain();
+        masterGain.gain.value = 0.045;
+        masterGain.connect(ctx.destination);
+
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 900;
+        filter.Q.value = 0.8;
+        filter.connect(masterGain);
+
+        const oscA = ctx.createOscillator();
+        oscA.type = 'sine';
+        oscA.frequency.value = 110;
+
+        const oscB = ctx.createOscillator();
+        oscB.type = 'sine';
+        oscB.frequency.value = 164.81;
+
+        const gainA = ctx.createGain();
+        gainA.gain.value = 0.03;
+
+        const gainB = ctx.createGain();
+        gainB.gain.value = 0.022;
+
+        const slowLfo = ctx.createOscillator();
+        const lfoGain = ctx.createGain();
+        slowLfo.type = 'sine';
+        slowLfo.frequency.value = 0.12;
+        lfoGain.gain.value = 8;
+        slowLfo.connect(lfoGain);
+        lfoGain.connect(oscA.frequency);
+        lfoGain.connect(oscB.frequency);
+
+        oscA.connect(gainA);
+        oscB.connect(gainB);
+        gainA.connect(filter);
+        gainB.connect(filter);
+
+        oscA.start();
+        oscB.start();
+        slowLfo.start();
+
+        return { ctx, masterGain, oscA, oscB, slowLfo };
+      }
+
+      musicToggle.addEventListener('click', () => {
+        if (!audioContext) {
+          audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        if (!slowMusicNodes) {
+          slowMusicNodes = buildSlowPrayerMusic();
+          musicToggle.textContent = 'Pause slow prayer music';
+          return;
+        }
+
+        if (slowMusicNodes.ctx.state === 'running') {
+          slowMusicNodes.ctx.suspend();
+          musicToggle.textContent = 'Play slow prayer music';
+        } else {
+          slowMusicNodes.ctx.resume();
+          musicToggle.textContent = 'Pause slow prayer music';
+        }
+      });
+    </script>
+  </body>
+</html>
